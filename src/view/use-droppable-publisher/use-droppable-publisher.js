@@ -40,6 +40,7 @@ type Props = {|
   direction: Direction,
   isDropDisabled: boolean,
   isCombineEnabled: boolean,
+  getScrollableParentRef: ?() => ?HTMLElement,
   ignoreContainerClipping: boolean,
   getDroppableRef: () => ?HTMLElement,
 |};
@@ -128,7 +129,10 @@ export default function useDroppablePublisher(args: Props) {
       const previous: Props = previousRef.current;
       const ref: ?HTMLElement = previous.getDroppableRef();
       invariant(ref, 'Cannot collect without a droppable ref');
-      const env: Env = getEnv(ref);
+      const env: Env = getEnv(
+        ref,
+        previous.getScrollableParentRef && previous.getScrollableParentRef(),
+      );
 
       const dragging: WhileDragging = {
         ref,

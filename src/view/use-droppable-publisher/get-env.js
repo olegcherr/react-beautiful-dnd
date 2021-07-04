@@ -20,8 +20,9 @@ const getIsFixed = (el: ?Element): boolean => {
   return getIsFixed(el.parentElement);
 };
 
-export default (start: Element): Env => {
-  const closestScrollable: ?Element = getClosestScrollable(start);
+export default (start: Element, scrollableParent: ?Element): Env => {
+  const closestScrollable: ?Element =
+    scrollableParent ?? getClosestScrollable(start);
   const isFixedOnPage: boolean = getIsFixed(start);
 
   return {
